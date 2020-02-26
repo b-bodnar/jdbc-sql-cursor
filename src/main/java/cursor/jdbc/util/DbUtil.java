@@ -46,36 +46,32 @@ public class DbUtil {
 
         String sql = generateSelectSql(id, model);
 
-        Field[] fields = model.getDeclaredFields();
-        Method[] methods = model.getMethods();
-
-        for (Field field : fields) {
-            for (Method method : methods) {
-
-                if (method.getName().toLowerCase().contains("set") && field.getName().toLowerCase().contains(field.getName())){
-
-
-                    method.setAccessible(true);
-                    method.invoke()
-                }
-            }
-
-        }
-
 
         try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+
                 Model modelClass = model.getConstructor().newInstance();
+                Field[] fields = model.getDeclaredFields();
+                Method[] methods = model.getMethods();
 
-               resultSet.getObject()
+                for (Field field : fields) {
+                    for (Method method : methods) {
 
 
+                        if (method.getName().toLowerCase().contains("set") && method.getName().toLowerCase().contains(field.getName().toLowerCase())) {
+                            method.setAccessible(true);
+                            System.out.println(field.getName() + " - " + method.getName());
+                            // we need cast to type on field
+                            //  method.invoke(resultSet.getObject(getFieldName(field)));
+                        }
+                    }
+
+
+                }
             }
-
-
         } catch (SQLException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
         }

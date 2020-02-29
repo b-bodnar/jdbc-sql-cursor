@@ -2,19 +2,18 @@ create database dev_profiles_db;
 
 create table accounts
 (
-	id int not null,
+	id int auto_increment primary key,
 	first_name varchar(45) not null,
 	last_name varchar(45) not null,
 	city varchar(45) not null,
 	gender varchar(10) not null,
-	username varchar(90) not null,
-	constraint user_pk primary key (id)
+	username varchar(90) not null unique,
 );
 
 create table profiles_table
 (
-    id int not null primary key,
-    username varchar(90)  not null,
+    id int auto_increment primary key,
+    username varchar(90)  not null unique,
     job_title varchar(45)  not null,
     department varchar(45)  not null,
     company varchar(45)  not null,

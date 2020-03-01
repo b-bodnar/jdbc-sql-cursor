@@ -17,7 +17,7 @@ public class DbUtil {
     private static DbUtil instance;
     private static final String URL = "jdbc:mysql://localhost:3306/dev_profiles_db?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "Dream1990";
+    private static final String PASSWORD = "root";
 
     public static DbUtil getInstance() {
         return Objects.isNull(instance)

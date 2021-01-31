@@ -4,6 +4,7 @@ import cursor.jdbc.annotation.Name;
 import cursor.jdbc.annotation.Table;
 import cursor.jdbc.model.Model;
 import lombok.SneakyThrows;
+import lombok.Value;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Field;
@@ -17,7 +18,7 @@ public class DbUtil {
     private static DbUtil instance;
     private static final String URL = "jdbc:mysql://localhost:3306/dev_profiles_db?useSSL=false&serverTimezone=UTC";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "Dream1990";
 
     public static DbUtil getInstance() {
         return Objects.isNull(instance)
@@ -30,7 +31,6 @@ public class DbUtil {
     }
 
     public static <T extends Model> Model findById(int id, Class<T> model) {
-
         var findById = "SELECT * FROM "
                 + getTableName(model)
                 + " WHERE id = ?";
@@ -48,10 +48,8 @@ public class DbUtil {
     }
 
     public static <T extends Model> List<Model> findAll(Class<T> model) {
-
         var findAll = "SELECT * FROM " + getTableName(model);
         List<Model> models = new ArrayList<>();
-
         try (PreparedStatement statement = getConnection().prepareStatement(findAll)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next())
@@ -77,7 +75,6 @@ public class DbUtil {
 
     public static void update(int id, Model model) {
         var update = updateSQLGenerator(model);
-
         try (PreparedStatement statement = getConnection().prepareStatement(update)) {
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -87,11 +84,9 @@ public class DbUtil {
     }
 
     public static <T extends Model> void delete(int id, Class<T> tableName) {
-
         var delete = "DELETE FROM "
                 + getTableName(tableName)
                 + " WHERE id = ?;";
-
         try (PreparedStatement statement = getConnection().prepareStatement(delete)) {
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -102,7 +97,6 @@ public class DbUtil {
 
     @SneakyThrows
     private static <T extends Model> Model createAndGetModel(Class<T> model, ResultSet resultSet) {
-
         resultSet.next();
         Model modelClass = model.getConstructor().newInstance();
         Field[] fields = model.getDeclaredFields();

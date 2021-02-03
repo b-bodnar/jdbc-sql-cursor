@@ -1,4 +1,4 @@
-## JDBS-SQL tutorial
+## JDBS-SQL project
 
 In this project, we learn basic **SQL** and **JDBC**. 
 

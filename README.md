@@ -20,8 +20,20 @@ Then we rename table `profiles_table` to `profiles`
 
 > All SQL scripts are save in dev_profiles.sql file. 
 
-### Patt 2 JDBC:
+### Part 2 JDBC:
 
-1.
-2.
-3.
+1. Create class `DbUtil`, configure work with BD. Create a method, that will be a manage connection to DB.
+2. Create four CRUD methods for interaction with DB
+    - `insert`
+    - `select`
+    - `update`
+    - `delete`
+
+
+These methods should be parametrized (these methods should be universal according to tables in DB)
+
+3. Create the models according to the tables in DB, CRUD method should return (depending on the purpose of method) exactly `model`, but not just `ResultSet`.
+Be sure to use `Lombok` for creating the models.
+4. In `main` method create an instance of the class `DbUtil`, open `connection`, and invoke each method for two tables.
+
+* Universal means that depending on the parameters, namely turning model will work method, no need to create several separate methods for each table.
